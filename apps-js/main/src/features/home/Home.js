@@ -9,6 +9,7 @@ import Button from 'react-md/lib/Buttons';
 import CardText from 'react-md/lib/Cards/CardText';
 import CardTitle from 'react-md/lib/Cards/CardTitle';
 import Card from 'react-md/lib/Cards';
+import {Link} from 'react-router-dom';
 
 
 export class Home extends Component {
@@ -40,13 +41,16 @@ export class Home extends Component {
           </CardText>
 
           {currentUser[0].programs.map((item, i) => (
+            <CardActions>
             <CardText>Type : {item.type} {item.name}</CardText>
 
+            <Link key={item.id} to={'/programme/'} />
+            <Button flat label="Voir le programme"/>
+
+            </CardActions>
+
           ))}
-          <CardActions>
-            <Button flat label="Action 1"/>
-            <Button flat label="Action 2"/>
-          </CardActions>
+
         </Card>
         }
       </div>

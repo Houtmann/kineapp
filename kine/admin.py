@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import register
 from django.forms import forms
 
-from kine.models import Exercice, ExerciceRoutine, Program, Patient, Media
+from kine.models import Exercice, ExerciceRoutine, Program, Patient, Media, ExerciceVariant
 
 
 class ExerciceInline(admin.TabularInline):
@@ -12,10 +12,25 @@ class ExerciceInline(admin.TabularInline):
     verbose_name_plural = 'Exercice'
     autocomplete_fields = ('exercice',)
 
+
+class ExerciceVariantInline(admin.TabularInline):
+    model = ExerciceVariant
+    extra = 0
+    verbose_name = "Variante d'exercice"
+    verbose_name_plural = "Variantes d'exercices"
+    autocomplete_fields = ('exercice',)
+
 @register(Exercice)
 class ExerciceAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_display = ('pk', 'name')
+    inlines = [ExerciceVariantInline, ]
+
+@register(ExerciceVariant)
+class VarianteAdmin(admin.ModelAdmin):
+    search_fields = ('description',)
+    list_display = ('pk', 'description')
+
 
 @register(ExerciceRoutine)
 class ExerciceRoutineAdmin(admin.ModelAdmin):
@@ -29,7 +44,7 @@ class ProgramAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     inlines = [ExerciceInline, ]
 
-class ProgrmInline(admin.TabularInline):
+class ProgramInline(admin.TabularInline):
     model = Patient.programs.through
     extra = 0
     verbose_name = 'Programme'
@@ -39,7 +54,7 @@ class ProgrmInline(admin.TabularInline):
 @register(Patient)
 class PatientAdmin(admin.ModelAdmin):
     list_display = ('user', 'phone')
-    inlines = [ProgrmInline, ]
+    inlines = [ProgramInline, ]
 
     # def numbers_programs(self, obj):
     #     obj.

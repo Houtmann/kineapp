@@ -11,7 +11,8 @@ class Exercice(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nom")
     description = models.TextField(verbose_name="Description", null=True, blank=True)
     media = models.ForeignKey("Media", on_delete=models.PROTECT , null=True, blank=True)
-    date_creation = models.DateTimeField(auto_created=True)
+    date_creation = models.DateTimeField(auto_created=True, auto_now=True)
+
     def __str__(self):
         return self.name
 
@@ -20,7 +21,15 @@ class Exercice(models.Model):
         verbose_name = 'Exercice'
         verbose_name_plural = 'Exercices'
 
+class ExerciceVariant(models.Model):
+    name = models.CharField(max_length=200, verbose_name="Nom")
+    description = models.TextField(verbose_name="Description", null=True, blank=True)
+    media = models.ForeignKey("Media", on_delete=models.PROTECT, null=True, blank=True)
+    date_creation = models.DateTimeField(auto_created=True, auto_now=True)
+    exercice = models.ForeignKey(Exercice, blank=True, null=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.exercice.name} {self.name}"
 
 class ExerciceRoutine(models.Model):
     exercice = models.ForeignKey(Exercice, on_delete=models.CASCADE)
