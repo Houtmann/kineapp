@@ -18,8 +18,6 @@ from django.urls import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '(@s#i-t6%rnh87y7a#7br@*qh3eg^$va5=kabza^kl$jrb-n)&'
@@ -28,7 +26,6 @@ SECRET_KEY = '(@s#i-t6%rnh87y7a#7br@*qh3eg^$va5=kabza^kl$jrb-n)&'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -53,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'kineproject.urls'
@@ -77,22 +75,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'kineproject.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 # Database
 DATABASES = {
 
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'kine',  # 'zewatt_test'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kine',
         'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',    # Ze-watt postgress1
-        'PORT': '5432',         # 6432=pgbouner , 5432=postgress
+        'HOST': '127.0.0.1',  # Ze-watt postgress1
+        'PORT': '5432',  # 6432=pgbouner , 5432=postgress
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -112,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -126,9 +120,24 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'access-control-allow-origin',
+    'access-control-allow-methods',
+)

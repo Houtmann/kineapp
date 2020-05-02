@@ -1,6 +1,10 @@
 import initialState from './initialState';
+import { reducer as getInitialDataReducer } from './getInitialData';
+import { reducer as registerUserReducer } from './registerUser';
 
 const reducers = [
+  getInitialDataReducer,
+  registerUserReducer,
 ];
 
 export default function reducer(state = initialState, action) {

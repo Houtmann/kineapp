@@ -10,10 +10,11 @@ from django.db import models
 class Exercice(models.Model):
     name = models.CharField(max_length=200, verbose_name="Nom")
     description = models.TextField(verbose_name="Description", null=True, blank=True)
-    media = models.ForeignKey("Media", on_delete=models.PROTECT , null=True)
+    media = models.ForeignKey("Media", on_delete=models.PROTECT , null=True, blank=True)
     date_creation = models.DateTimeField(auto_created=True)
     def __str__(self):
         return self.name
+
 
     class Meta:
         verbose_name = 'Exercice'
@@ -58,7 +59,8 @@ class Program(models.Model):
 class Patient(models.Model):
     user = models.OneToOneField(User, verbose_name="Utilisateur", on_delete=models.PROTECT)
     phone = models.CharField(max_length=10, verbose_name="Téléphone", null=True, blank=True)
-    programs = models.ManyToManyField(Program)
+    programs = models.ManyToManyField(Program, null=True, blank=True)
+    is_active = models.BooleanField(default=False)
 
 
     def __str__(self):
@@ -77,5 +79,5 @@ class Media(models.Model):
         PHOTO = 'Photo'
     name = models.CharField(max_length=200, null=True, blank=True)
     type = models.CharField(choices=MediaType.choices, max_length=200)
-    file = models.FileField()
-    date_creation = models.DateTimeField(auto_created=True)
+    file = models.FileField(null=True, blank=True)
+    date_creation = models.DateTimeField(auto_now=True)
