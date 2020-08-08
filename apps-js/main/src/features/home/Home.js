@@ -3,13 +3,21 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getInitialData, registerUser } from './redux/actions';
-import CardActions from 'react-md/lib/Cards/CardActions';
-import Button from 'react-md/lib/Buttons';
-import CardText from 'react-md/lib/Cards/CardText';
-import CardTitle from 'react-md/lib/Cards/CardTitle';
-import Card from 'react-md/lib/Cards';
-import {Link} from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Link from '@material-ui/core/Link';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
 
 
 export class Home extends Component {
@@ -33,46 +41,67 @@ export class Home extends Component {
     return (
 
       <div className="home-home">
-        {currentUser &&
-        <Card className="md-cell">
-          <CardTitle title="hello">Bonjour {currentUser[0].user.first_name} {currentUser[0].user.last_name}</CardTitle>
-          <CardText>
-          Voici les programmes disponibles :
-          </CardText>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" className="toto" color="inherit" aria-label="menu">
 
-          {currentUser[0].programs.map((item, i) => (
-            <CardActions>
-            <CardText>Type : {item.type} {item.name}</CardText>
+            </IconButton>
+            <Typography variant="h6" className="toto">
+            </Typography>
+            <Button color="inherit">Accueil</Button>
+            <Button color="inherit">Mes programmes</Button>
+            <Button  color="inherit">Profil</Button>
+          </Toolbar>
+        </AppBar>
+        <Container maxWidth="lg">
 
-            <Link key={item.id} to={'/programme/'} />
-            <Button flat label="Voir le programme"/>
+          {/* {currentUser &&
+               {currentUser[0].user.first_name} {currentUser[0].user.last_name}
 
-            </CardActions>
+              Voici les programmes disponibles :
 
-          ))}
 
-        </Card>
-        }
+            currentUser[0].programs.map((item, i) => (
+
+                <CardText>Type : {item.type} {item.name}</CardText>
+
+                <Link to={{
+                  pathname: '/programme',
+                  state: {
+                    program: item
+                  }
+                }}>{item.name}</Link>
+
+
+
+
+
+
+            ))}*/}
+
+
+        </Container>
+
       </div>
-    );
+  );
   }
-}
+  }
 
-/* istanbul ignore next */
-function mapStateToProps(state) {
-  return {
+  /* istanbul ignore next */
+  function mapStateToProps(state) {
+    return {
     home: state.home,
   };
-}
+  }
 
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+  /* istanbul ignore next */
+  function mapDispatchToProps(dispatch) {
+    return {
+    actions: bindActionCreators({...actions}, dispatch),
   };
-}
+  }
 
-export default connect(
+  export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+  )(Home);
