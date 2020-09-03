@@ -5,6 +5,7 @@ import user from './modules/user'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    strict: true,
     state: {
         token: '',
         baseUrl: '',
@@ -17,24 +18,25 @@ export default new Vuex.Store({
         getBaseUrl:(state) => {return state.baseUrl}
 
     },
-    actions:{
-        saveToken({commit }, token){
-            commit('setToken', token)
-
-        },
-        saveBaseUrl({commit}, url){
-            commit("setBaseUrl", url)
-        }
-    },
     mutations:{
-        setToken (state, token) {
+        STATE_SET_TOKEN (state, token) {
             state.token = token
         },
-        setBaseUrl(state, url){
+        STATE_SET_BASE_URL(state, url){
             state.baseUrl = url
         }
 
 
-    }
+    },
+    actions:{
+        SET_TOKEN({commit}, token){
+            commit('STATE_SET_TOKEN', token)
+
+        },
+        SET_BASE_URL({commit}, url){
+            commit("STATE_SET_BASE_URL", url)
+        }
+    },
+
 });
 

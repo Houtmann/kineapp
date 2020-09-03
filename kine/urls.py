@@ -6,6 +6,6 @@ from kine.views.initialData import InitialData
 
 urlpatterns = [
     path('login/', LoginView.as_view()),
-    path('initial-data', InitialData.as_view()),
+    path('initial-data', InitialData.as_view({'get': 'retrieve'})),
 
 ]

@@ -16,7 +16,10 @@ export const routes = [
     {
         path: '/programme/:programmeId',
         name: 'Programme',
-        component: Programme
+        component: Programme,
+
+        props:true
+
     },
 
 ];

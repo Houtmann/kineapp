@@ -1,7 +1,4 @@
-const initialState = {
-  token: null,
-  baseApiUrl: null,
-  currentUser: null,
+const
   getInitialDataPending: false,
   getInitialDataError: null,
 };

@@ -1,20 +1,24 @@
 <template>
     <div id="app">
         <NavBar></NavBar>
-        <div v-if="loading">
+
+        <div v-if="getUserInfoPending === true">
+            cicicic
             <div>
-                <md-progress-bar md-mode="indeterminate"></md-progress-bar>
-                <md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
+            <Spinner/>
             </div>
         </div>
         <div v-else>
-            <div v-if="isActiveUser"><router-view></router-view></div>
-            <div v-else>Votre compte est désactivé</div>
+<!--            <div v-if="isActiveUser">-->
+            toto
+              <transition name="fade" mode="out-in"><router-view></router-view></transition></div>
+
+<!--            <div v-else>Votre compte est désactivé</div>-->
 
         </div>
 
 
-    </div>
+
 </template>
 
 <script>
@@ -22,38 +26,27 @@
 
     import {mapActions, mapGetters} from "vuex";
     import NavBar from "@/modules/home/navbar";
-    import httpService from "@/httpService";
+    import Spinner from "@/modules/core/Spinner";
+
 
     export default {
         name: 'App',
-        components: {NavBar},
+        components: {Spinner, NavBar},
         created() {
             // on recupere les data dnas la templates html
             const user = JSON.parse(document.querySelector('#app') && document.querySelector('#app').getAttribute('data-django'));
-            this.saveToken(user.token)
-            this.saveBaseUrl(user.base_url)
+            this.SET_TOKEN(user.token)
+            console.log("pending", this.getUserInfoPending)
+            this.SET_BASE_URL(user.baseurl)
 
-            httpService(this.getToken).get(this.getBaseUrl + 'initial-data')
-                .then(response => {
-                    console.log(response.data[0])
+            this.getUserInfos({token:user.token, url:user.baseurl})
 
-                    this.saveUser(response.data[0])
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.error = true
-                })
-                .finally(() => this.loading = false)
 
         },
         methods: {
-            ...mapActions([
-                'saveToken',
-                'saveBaseUrl'
-            ]), ...mapActions('user', [
-                'saveUser'
-            ]),
+            ...mapActions(['SET_TOKEN', 'SET_BASE_URL']), ...mapActions('user', ['getUserInfos']),
         },
+
         data() {
             return {
                 message: '',
@@ -64,14 +57,8 @@
 
         computed: {
             // mix the getters into computed with object spread operator
-            ...mapGetters([
-                'getToken',
-                'getBaseUrl'
-            ]),
-            ...mapGetters('user', [
-                'getUser',
-                'isActiveUser'
-            ])
+            ...mapGetters(['getToken','getBaseUrl']), ...mapGetters('user', ['isActiveUser', 'getUser', 'getUserInfoPending'])
+
         }
     }
 

@@ -14,7 +14,7 @@
 
 
             <md-table-row v-for="item in getUserProgrammes" :key="item.id">
-                 <md-table-cell><router-link :to="{ name: 'Programme', params: { programmeId: item.id }}">{{ item.name }}</router-link></md-table-cell>
+                 <md-table-cell><router-link :to="{ name: 'Programme', params: { programmeId: item.id , prog:item}} ">{{ item.name }}</router-link></md-table-cell>
                     <md-table-cell>{{ item.type }}</md-table-cell>
                     <md-table-cell>{{ item.description }}</md-table-cell>
                 </md-table-row>
@@ -40,6 +40,7 @@
                 'getUserProgrammes',
             ])
         },
+
     }
 
 </script>

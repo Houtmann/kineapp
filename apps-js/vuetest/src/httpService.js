@@ -26,4 +26,26 @@ const httpService = (token = null) => {
     };
 };
 
-export default httpService
+
+
+
+const doAsync = ({commit}, req, mutationTypes) => {
+
+    commit(mutationTypes.PENDING)
+
+     req
+            .then(response => {
+                commit(mutationTypes.SUCCESS, response.data)
+            })
+            .catch(error => {
+                console.log(error)
+                commit(mutationTypes.FAILURE)
+            })
+
+}
+
+export {httpService, doAsync}
+
+
+
+

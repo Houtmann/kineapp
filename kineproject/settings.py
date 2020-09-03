@@ -77,18 +77,7 @@ WSGI_APPLICATION = 'kineproject.wsgi.application'
 
 
 # Database
-DATABASES = {
-
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kine',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',  # Ze-watt postgress1
-        'PORT': '5432',  # 6432=pgbouner , 5432=postgress
-    }
-}
-
+arh
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -141,3 +130,25 @@ CORS_ALLOW_HEADERS = (
     'access-control-allow-origin',
     'access-control-allow-methods',
 )
+
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}
