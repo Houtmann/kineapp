@@ -6,10 +6,10 @@ from kine.models import Program, Patient, ExerciceRoutine, Exercice
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = "__all__"
+
 
 class ExerciceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,32 +17,24 @@ class ExerciceSerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 3
 
+
 class ExerciceRoutineSerializer(serializers.ModelSerializer):
     exercice = ExerciceSerializer
 
     class Meta:
-
         model = ExerciceRoutine
-        fields = ["exercice", "rep", "serie"]
+        fields = ["exercice", "rep", "serie", "ris"]
         depth = 3
 
 
-class ProgramsSerializer(serializers.Serializer):
-    exerciceroutine_set = ExerciceRoutineSerializer(many=True)
-
+class ProgramsSerializer(serializers.ModelSerializer):
+    exercices = ExerciceRoutineSerializer(source='exerciceroutine_set', many=True)
+    class Meta:
+        model = Program
+        fields = ['id', 'name', 'description', 'type', 'exercices']
 
 
 class PatientSerializer(serializers.ModelSerializer):
-
-    programs = ProgramsSerializer(many=True)
-
-
-
     class Meta:
         model = Patient
-        fields = ['user', 'phone', 'is_active', "programs"]
-
-
-
-
-
+        fields = ['user', 'phone', 'is_active']

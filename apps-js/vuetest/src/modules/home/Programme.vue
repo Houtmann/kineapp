@@ -1,17 +1,16 @@
 <template>
     <div>
-        Programme: {{prog.name}}
-        Description: {{prog.description}}
-        {{getToken}}
+      <row>{{prog.name}}</row>
+      <row>Description: {{prog.description}}</row>
+      {{prog.exercices}}
         <div v-for="item in prog.exercices" :key="item.id">
             <li>{{ item.name }} {{item.description}}</li>
         </div>
-        <input v-on:input="toto" placeholder="modifiez-moi">
     </div>
 </template>
 
 <script>
-    import {mapActions, mapGetters} from "vuex";
+    import { mapGetters} from "vuex";
 
     export default {
         name: "Programme",
@@ -23,13 +22,6 @@
                 },
             },
         methods: {
-            ...mapActions([
-                'saveToken',
-            ]),
-            toto(e) {
-
-                this.saveToken(e.target.value)
-            }
 
         },
 

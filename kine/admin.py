@@ -38,11 +38,19 @@ class ExerciceRoutineAdmin(admin.ModelAdmin):
     search_fields = ('exercice',)
     autocomplete_fields = ['exercice']
 
+class PatientInline(admin.StackedInline):
+    model = Patient.programs.through
+    extra = 0
+    verbose_name = 'Patient'
+    verbose_name_plural = 'Patient'
+    autocomplete_fields = ('program',)
+
+
 @register(Program)
 class ProgramAdmin(admin.ModelAdmin):
     list_display = ('name', 'type')
     search_fields = ('name',)
-    inlines = [ExerciceInline, ]
+    inlines = [ExerciceInline, PatientInline]
 
 class ProgramInline(admin.TabularInline):
     model = Patient.programs.through

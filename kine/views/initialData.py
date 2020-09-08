@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from kine.models import Program, Patient
-from kine.serializers.initialDataSerializer import PatientSerializer
+from kine.serializers.initialDataSerializer import PatientSerializer, ProgramsSerializer
 
 
 class InitialData(viewsets.ViewSet):
@@ -17,16 +17,22 @@ class InitialData(viewsets.ViewSet):
     """
     authentication_classes = [TokenAuthentication]
 
-
-
-    def retrieve(self, request, pk=None):
+    def retrieve(self, request):
         user = self.request.user
-        patient = Patient.objects.prefetch_related(Prefetch('programs', queryset=Program.objects.filter().prefetch_related("exerciceroutine_set__exercice"))).get(user=user)
+        patient = Patient.objects.get(user=user)
         serializer = PatientSerializer(patient)
+        time.sleep(1)
         return Response(serializer.data)
 
 
+class ProgramsView(viewsets.ModelViewSet):
+    authentication_classes = [TokenAuthentication]
+    serializer_class = ProgramsSerializer
 
+    def get_queryset(self):
+        time.sleep(1)
+        program = Program.objects.filter(patient__user_id=self.request.user.id).prefetch_related("exerciceroutine_set")
+        return program
 
 
 
