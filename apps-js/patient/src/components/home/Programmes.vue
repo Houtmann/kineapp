@@ -13,6 +13,7 @@
             <v-card
                 class="mx-auto"
                 max-width="400"
+                width="320"
                 outlined
                 :elevation="hover ? 12 : 2"
                 :class="{ 'on-hover': hover }"
