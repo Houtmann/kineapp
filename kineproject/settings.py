@@ -157,3 +157,9 @@ CORS_ALLOW_HEADERS = (
 #         }
 #     }
 # }
+
+
+try:
+    from .prod import *
+except:
+    pass
